@@ -5,12 +5,13 @@ MSGLEN = 100
 
 
 class Listener(Thread):
-    def __init__(self, port, queue):
-        self.port = port
+    def __init__(self, queue, address=socket.gethostbyname(), port=1500):
         self.queue = queue
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.bind((socket.gethostbyname(), self.port))
-        self.server_socket = sock
+        self.address = address
+        self.port = port
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.bind((self.address, self.port))
+        self.server_socket = s
 
     def listen_from_client(self):
         chunks = []
