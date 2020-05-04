@@ -3,6 +3,7 @@ import socket
 
 MSGLEN = 100
 
+
 class Listener(Thread):
     def __init__(self, port, queue):
         self.port = port
