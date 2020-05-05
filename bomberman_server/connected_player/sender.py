@@ -16,7 +16,7 @@ class Sender(Thread):
     def send_to_client(self, message):
         total_sent = 0
         while total_sent < MSGLEN:
-            sent = self.sock.send(message[total_sent:])
+            sent = self.sock.send(message[total_sent:].encode())
             if sent == 0:
                 raise RuntimeError("Socket connection broken")
             total_sent = total_sent + sent

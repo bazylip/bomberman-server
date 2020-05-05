@@ -11,5 +11,9 @@ class ConnectedPlayer(Thread):
         self.sender = Sender(self.sender_queue)
         self.listener = Listener(self.listener_queue)
 
+    def listen_for_new_player(self):
+        conn, addr = self.listener.listen_for_client()
+        self.listener.start()
+
     def run(self):
         pass
