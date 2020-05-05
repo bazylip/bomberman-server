@@ -6,6 +6,7 @@ import time
 MSGLEN = 100
 MESSAGE = "Test message".zfill(MSGLEN)
 
+
 class SimpleSender(threading.Thread):
     def __init__(self, port):
         super().__init__()
@@ -14,7 +15,10 @@ class SimpleSender(threading.Thread):
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     def connect_to_server(self):
-        self.client_socket.connect((socket.gethostbyname(socket.gethostname()), self.port))
+        self.client_socket.connect(
+            (socket.gethostbyname(
+                socket.gethostname()),
+                self.port))
 
     def send_message(self, message):
         total_sent = 0
