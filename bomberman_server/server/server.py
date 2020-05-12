@@ -9,9 +9,11 @@ class Server(GameMechanics):
 
     def run_server(self):
         listening_server = ListeningServer()
-        print(f"Waiting for players on {listening_server.address}, port {listening_server.port}")
+        print(
+            f"Waiting for players on {listening_server.address}, port {listening_server.port}")
         client1, client2 = listening_server.listen_for_players()
         print(f"Players connected")
+
 
 if __name__ == "__main__":
     server = Server()
