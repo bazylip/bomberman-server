@@ -5,22 +5,11 @@ MSGLEN = 100
 
 
 class Listener(Thread):
-    def __init__(self, queue, address="0.0.0.0", port=1500):
+    def __init__(self, queue, socket, client):
         super().__init__()
         self.queue = queue
-        self.address = address
-        self.port = port
-        self.client = None
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.bind((self.address, self.port))
-        self.server_socket = s
-
-    def listen_for_client(self):
-        self.server_socket.listen()
-        conn, addr = self.server_socket.accept()
-        self.client = conn
-        print(f"New connection from client: {addr}")
-        return conn, addr
+        self.client = client
+        self.socket = socket
 
     def receive_message(self):
         chunks = []
@@ -36,10 +25,9 @@ class Listener(Thread):
         return message
 
     def run(self):
-        self.listen_for_client()
         while True:
             message = self.receive_message()
             self.queue.put(message)
             if message == "end":
                 break
-        self.server_socket.close()
+        self.socket.close()
