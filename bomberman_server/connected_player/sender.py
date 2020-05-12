@@ -5,7 +5,12 @@ MSGLEN = 100
 
 
 class Sender(Thread):
-    def __init__(self, queue, address=socket.gethostbyname(socket.gethostname()), port=1500):
+    def __init__(
+            self,
+            queue,
+            address=socket.gethostbyname(
+                socket.gethostname()),
+            port=1500):
         super().__init__()
         self.queue = queue
         self.address = address
