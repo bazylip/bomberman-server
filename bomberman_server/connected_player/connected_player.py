@@ -40,6 +40,7 @@ class ConnectedPlayer(Thread):
             self.x = x
             self.y = y
 
+
 if __name__ == "__main__":
     player = ConnectedPlayer(15001, 1)
     player.start()
