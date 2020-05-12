@@ -5,7 +5,7 @@ MSGLEN = 100
 
 
 class Listener(Thread):
-    def __init__(self, queue, address="0.0.0.0", port=15000):
+    def __init__(self, queue, address="0.0.0.0", port=1500):
         super().__init__()
         self.queue = queue
         self.address = address
@@ -31,9 +31,15 @@ class Listener(Thread):
                 raise RuntimeError("socket connection broken")
             chunks.append(chunk)
             bytes_recd = bytes_recd + len(chunk)
-        return b''.join(chunks)
+        message = b''.join(chunks)
+        message = message.decode().lstrip("0")
+        return message
 
     def run(self):
+        self.listen_for_client()
         while True:
-            self.queue.put(self.receive_message().decode())
-            return
+            message = self.receive_message()
+            self.queue.put(message)
+            if message == "end":
+                break
+        self.server_socket.close()
