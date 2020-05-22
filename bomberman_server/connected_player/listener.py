@@ -29,7 +29,7 @@ class Listener(Thread):
             try:
                 message = self.receive_message()
                 self.queue.put(message)
-            except:
+            except BaseException:
                 print("Client has disconnected")
                 self.socket.close()
                 break

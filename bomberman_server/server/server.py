@@ -26,6 +26,7 @@ class Server(GameMechanics):
     def close_connection_with_players(self):
         self.send_info_to_players("end client")
 
+
 if __name__ == "__main__":
     server = Server()
     server.run_server()
