@@ -1,7 +1,7 @@
 from threading import Thread
 from queue import Queue
-from listener import Listener
-from sender import Sender
+from bomberman_server.connected_player.listener import Listener
+from bomberman_server.connected_player.sender import Sender
 
 
 class ConnectedPlayer(Thread):

@@ -17,15 +17,14 @@ class ListeningServer:
 
         def create_sending_socket(address, port):
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.connect((self.address, self.port))
+            s.connect((address, port))
             self.client_socket = s
             print(f"Connected to {address} on {port}")
             return s
 
         listening_socket_1, client_1 = create_listening_socket(self.address, self.port_range[0])
+        sending_socket_1 = create_sending_socket(socket.gethostbyname(socket.gethostname()), self.port_range[0])
         listening_socket_2, client_2 = create_listening_socket(self.address, self.port_range[1])
-
-        sending_socket_1 = create_sending_socket(self.address, self.port_range[0])
-        sending_socket_2 = create_sending_socket(self.address, self.port_range[1])
+        sending_socket_2 = create_sending_socket(socket.gethostbyname(socket.gethostname()), self.port_range[1])
 
         return (listening_socket_1, client_1, sending_socket_1), (listening_socket_2, client_2, sending_socket_2)
