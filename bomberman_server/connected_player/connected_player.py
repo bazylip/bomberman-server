@@ -19,6 +19,9 @@ class ConnectedPlayer(Thread):
         self.listener.start()
         self.sender.start()
 
+    def send_message(self, message):
+        self.sender_queue.put(message)
+
     def run(self):
         self.start_communication()
         self.listener.join()

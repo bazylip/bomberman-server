@@ -12,10 +12,11 @@ class Sender(Thread):
 
     def send_to_client(self, message):
         total_sent = 0
+        print(f"Sent message: \"{message}\"", end=" ")
         message = message.zfill(MSGLEN)
         while total_sent < MSGLEN:
             sent = self.socket.send(message[total_sent:].encode())
-            print(f"Sent: {sent}")
+            print(f" sent bytes: {sent}")
             if sent == 0:
                 raise RuntimeError("Socket connection broken")
             total_sent = total_sent + sent
@@ -23,7 +24,7 @@ class Sender(Thread):
     def run(self):
         while True:
             message = self.queue.get()
-            self.send_to_client(message)
-            if message == "end":
+            if message == "end server":
                 break
+            self.send_to_client(message)
         self.socket.close()

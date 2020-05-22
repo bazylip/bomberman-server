@@ -26,8 +26,10 @@ class Listener(Thread):
 
     def run(self):
         while True:
-            message = self.receive_message()
-            self.queue.put(message)
-            if message == "end":
+            try:
+                message = self.receive_message()
+                self.queue.put(message)
+            except:
+                print("Client has disconnected")
+                self.socket.close()
                 break
-        self.socket.close()
