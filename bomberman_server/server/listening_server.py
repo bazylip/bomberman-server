@@ -27,4 +27,5 @@ class ListeningServer:
         listening_socket_2, client_2 = create_listening_socket(self.address, self.port_range[1])
         sending_socket_2 = create_sending_socket(socket.gethostbyname(socket.gethostname()), self.port_range[1])
 
-        return (listening_socket_1, client_1, sending_socket_1), (listening_socket_2, client_2, sending_socket_2)
+        return (listening_socket_1, client_1,
+                sending_socket_1), (listening_socket_2, client_2, sending_socket_2)

@@ -14,6 +14,7 @@ class Server(GameMechanics):
         client1, client2 = listening_server.listen_for_players()
         print(f"Players connected \n{client1}\n{client2}")
 
+
 if __name__ == "__main__":
     server = Server()
     server.run_server()
