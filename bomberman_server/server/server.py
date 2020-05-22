@@ -19,15 +19,18 @@ class Server(GameMechanics):
         self.player2.start()
         print(f"Players connected \n{client1}\n{client2}")
 
-    def send_info_to_players(self, message="Test message"):
-        self.player1.send_message(message)
-        self.player2.send_message(message)
+    def send_info_to_player(self, id, message):
+        self.player1.send_message(message) if id == 1 else self.player2.send_message(message)
+
+    def send_info_to_both_players(self, message):
+        self.send_info_to_player(id=1, message=message)
+        self.send_info_to_player(id=2, message=message)
 
     def close_connection_with_players(self):
-        self.send_info_to_players("end client")
+        self.send_info_to_both_players("end client")
 
 if __name__ == "__main__":
     server = Server()
     server.run_server()
-    server.send_info_to_players()
+    server.send_info_to_player(id=1, message=server.get_player_info(1))
     server.close_connection_with_players()

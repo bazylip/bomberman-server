@@ -13,7 +13,7 @@ class ConnectedPlayer(Thread):
         self.sender = Sender(self.sender_queue, sending_socket)
         self.id = id
         self.location = self.Coordinates(1, 1)
-        self.health = 100
+        self.hp = 100
 
     def start_communication(self):
         self.listener.start()
@@ -31,8 +31,8 @@ class ConnectedPlayer(Thread):
         self.location.x = x
         self.location.y = y
 
-    def change_health(self, health):
-        self.health = health
+    def change_health(self, hp):
+        self.hp = hp
 
     class Coordinates:
         def __init__(self, x, y):
