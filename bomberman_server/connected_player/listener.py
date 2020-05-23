@@ -5,17 +5,16 @@ MSGLEN = 100
 
 
 class Listener(Thread):
-    def __init__(self, queue, socket, client):
+    def __init__(self, queue, socket):
         super().__init__()
         self.queue = queue
-        self.client = client
         self.socket = socket
 
     def receive_message(self):
         chunks = []
         bytes_recd = 0
         while bytes_recd < MSGLEN:
-            chunk = self.client.recv(min(MSGLEN - bytes_recd, 2048))
+            chunk = self.socket.recv(min(MSGLEN - bytes_recd, 2048))
             if chunk == b'':
                 raise RuntimeError("socket connection broken")
             chunks.append(chunk)

@@ -5,11 +5,11 @@ from bomberman_server.connected_player.sender import Sender
 
 
 class ConnectedPlayer(Thread):
-    def __init__(self, id, listening_socket, client, sending_socket):
+    def __init__(self, id, listening_socket, sending_socket):
         super().__init__()
         self.listener_queue = Queue()
         self.sender_queue = Queue()
-        self.listener = Listener(self.listener_queue, listening_socket, client)
+        self.listener = Listener(self.listener_queue, listening_socket)
         self.sender = Sender(self.sender_queue, sending_socket)
         self.id = id
         self.location = self.Coordinates(1, 1)

@@ -1,10 +1,12 @@
 import socket
+import time
 
 
 class ListeningServer:
-    def __init__(self, address="0.0.0.0", port_range=[15000, 15001]):
+    def __init__(self, address="0.0.0.0", listening_port=15000, client_port=15000):
         self.address = address
-        self.port_range = port_range
+        self.listening_port = listening_port
+        self.client_port = client_port
 
     def listen_for_players(self):
         def create_listening_socket(address, port):
@@ -13,7 +15,7 @@ class ListeningServer:
             s.listen()
             client, addr = s.accept()
             print(f"New connection from client: {addr}")
-            return s, client
+            return client, addr
 
         def create_sending_socket(address, port):
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -22,10 +24,10 @@ class ListeningServer:
             print(f"Connected to {address} on {port}")
             return s
 
-        listening_socket_1, client_1 = create_listening_socket(self.address, self.port_range[0])
-        sending_socket_1 = create_sending_socket(socket.gethostbyname(socket.gethostname()), self.port_range[0])
-        listening_socket_2, client_2 = create_listening_socket(self.address, self.port_range[1])
-        sending_socket_2 = create_sending_socket(socket.gethostbyname(socket.gethostname()), self.port_range[1])
+        listening_socket_1, addr1 = create_listening_socket(self.address, self.listening_port)
+        sending_socket_1 = create_sending_socket(addr1[0], self.client_port)
+        listening_socket_2, addr2 = create_listening_socket(self.address, self.listening_port)
+        sending_socket_2 = create_sending_socket(addr2[0], self.client_port)
 
-        return (listening_socket_1, client_1,sending_socket_1), \
-               (listening_socket_2, client_2, sending_socket_2)
+        return (listening_socket_1, sending_socket_1), \
+               (listening_socket_2, sending_socket_2)
