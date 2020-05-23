@@ -32,5 +32,6 @@ class Server(GameMechanics):
 if __name__ == "__main__":
     server = Server()
     server.run_server()
-    server.send_info_to_player(id=1, message=server.get_player_info(1))
+    server.send_info_to_player(id=1, message=server.get_player_info(id=1))
+    server.send_info_to_player(id=2, message=server.get_player_info(id=2))
     server.close_connection_with_players()
