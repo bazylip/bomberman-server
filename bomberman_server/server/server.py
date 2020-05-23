@@ -1,3 +1,5 @@
+import time
+
 from bomberman_server.server.listening_server import ListeningServer
 from bomberman_server.server.game_mechanics import GameMechanics
 from bomberman_server.connected_player.connected_player import ConnectedPlayer
@@ -27,11 +29,19 @@ class Server(GameMechanics):
         self.send_info_to_player(id=2, message=message)
 
     def close_connection_with_players(self):
+        print("Closing connection with players")
         self.send_info_to_both_players("end client")
+
+    def shutdown(self):
+        print("Shutting down...")
+        self.send_info_to_both_players("end server")
 
 if __name__ == "__main__":
     server = Server()
     server.run_server()
     server.send_info_to_player(id=1, message=server.get_player_info(id=1))
     server.send_info_to_player(id=2, message=server.get_player_info(id=2))
+    time.sleep(1)
     server.close_connection_with_players()
+    time.sleep(1)
+    server.shutdown()
