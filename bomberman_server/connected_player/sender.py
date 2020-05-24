@@ -1,7 +1,7 @@
 from threading import Thread
 import socket
 
-MSGLEN = 100
+MSGLEN = 200
 
 
 class Sender(Thread):
@@ -12,11 +12,9 @@ class Sender(Thread):
 
     def send_to_client(self, message):
         total_sent = 0
-        print(f"Sent message: \"{message}\"", end=" ")
         message = message.zfill(MSGLEN)
         while total_sent < MSGLEN:
             sent = self.socket.send(message[total_sent:].encode())
-            print(f" sent bytes: {sent}")
             if sent == 0:
                 raise RuntimeError("Socket connection broken")
             total_sent = total_sent + sent
