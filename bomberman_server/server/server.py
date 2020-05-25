@@ -54,7 +54,7 @@ class Server(GameMechanics):
             self.execute_mechanics(action_client1, action_client2)
             self.send_info_to_both_players(self.json_board())
             print(self.board_state)
-            #time.sleep(1)
+            time.sleep(0.01)
         self.close_connection_with_players()
         time.sleep(1)
         self.shutdown()

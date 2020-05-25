@@ -2,6 +2,8 @@ import json
 
 from bomberman_server.connected_player.connected_player import ConnectedPlayer
 
+BOARD_DIMENSION_Y = 9
+BOARD_DIMENSION_X = 15
 
 class GameMechanics:
     def __init__(self):
@@ -33,19 +35,28 @@ class GameMechanics:
         for action_dict, player in zip([action_client1, action_client2], [self.player1, self.player2]):
             if action_dict is not None:
                 action = eval(action_dict).get("action")
-                if action == "up":
-                    player.location.y += 1
-                elif action == "down":
-                    player.location.y -= 1
-                elif action == "right":
-                    player.location.x += 1
-                elif action == "left":
-                    player.location.x -= 1
-                elif action == "b":
+                if action == "b":
                     self.add_bomb(player.location.x, player.location.y)
+                else:
+                    player = self._valid_location(player, action)
         # Placeholder: execute mechanics
         self._update_board_state()
         self.update_players()
+
+    def _valid_location(self, player, action):
+        if action == "up":
+            if not player.location.x % 2 == 0 and not player.location.y == BOARD_DIMENSION_Y:
+                player.location.y += 1
+        elif action == "down":
+            if not player.location.x % 2 == 0 and not player.location.y == 1:
+                player.location.y -= 1
+        elif action == "right":
+            if not player.location.y % 2 == 0 and not player.location.x == BOARD_DIMENSION_X:
+                player.location.x += 1
+        elif action == "left":
+            if not player.location.y % 2 == 0 and not player.location.x == 1:
+                player.location.x -= 1
+        return player
 
     def update_players(self):
         pass
