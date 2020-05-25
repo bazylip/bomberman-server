@@ -49,12 +49,15 @@ class Server(GameMechanics):
     def game_loop(self):
         self.start_server()
         self.send_initial_info()
+        print_tick = 0
         while True:
             action_client1, action_client2 = self.get_actions_from_players()
             self.execute_mechanics(action_client1, action_client2)
             self.send_info_to_both_players(self.json_board())
-            print(self.board_state)
-            time.sleep(0.01)
+            print_tick += 1
+            if print_tick == 100000:
+                print(self.board_state)
+                print_tick = 0
         self.close_connection_with_players()
         time.sleep(1)
         self.shutdown()
