@@ -13,7 +13,7 @@ class ConnectedPlayer(Thread):
         self.listener = Listener(self.listening_queue, listening_socket)
         self.sender = Sender(self.sending_queue, sending_socket)
         self.id = id
-        self.location = self.Coordinates(1, 1)
+        self.location = self.Coordinates(1, 1) if id == 1 else self.Coordinates(15, 9)
         self.hp = 100
 
     def start_communication(self):

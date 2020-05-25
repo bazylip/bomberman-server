@@ -2,8 +2,9 @@ import json
 
 from bomberman_server.connected_player.connected_player import ConnectedPlayer
 
-BOARD_DIMENSION_Y = 9
+
 BOARD_DIMENSION_X = 15
+BOARD_DIMENSION_Y = 9
 BOMB_TICKS_THRESHOLD = 300000
 BOMB_EXPLOSION_RANGE = 4
 HEALTH_PER_EXPLOSION = 25
