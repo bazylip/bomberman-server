@@ -5,6 +5,8 @@ from bomberman_server.connected_player.connected_player import ConnectedPlayer
 BOARD_DIMENSION_Y = 9
 BOARD_DIMENSION_X = 15
 BOMB_TICKS_THRESHOLD = 300000
+BOMB_EXPLOSION_RANGE = 4
+HEALTH_PER_EXPLOSION = 25
 
 class GameMechanics:
     def __init__(self):
@@ -56,8 +58,24 @@ class GameMechanics:
     def _explode_bombs(self):
         for bomb in self.board_state.get("bombs"):
             if bomb["ticks"] == BOMB_TICKS_THRESHOLD:
-                #TODO: add bomb explosion
-                self.board_state["bombs"].remove(bomb)
+                self._explode_bomb(bomb)
+
+    def _explode_bomb(self, bomb):
+        bomb_x, bomb_y = bomb.get("x"), bomb.get("y")
+        if bomb_x % 2 == 0:
+            y_exploded_fields = range(bomb_y, bomb_y+1)
+        else:
+            y_exploded_field = range(bomb_y-BOMB_EXPLOSION_RANGE, bomb_y+BOMB_EXPLOSION_RANGE)
+        if bomb_y % 2 == 0:
+            x_exploded_fields = range(bomb_x, bomb_x+1)
+        else:
+            x_exploded_field = range(bomb_x - BOMB_EXPLOSION_RANGE, bomb_x + BOMB_EXPLOSION_RANGE)
+
+        for players in [self.player1, self.player2]:
+            if players.location.x in x_exploded_field or players.location.y in y_exploded_field:
+                players.remove_health(HEALTH_PER_EXPLOSION)
+
+        self.board_state["bombs"].remove(bomb)
 
     def _valid_location(self, player, action):
         if action == "up":

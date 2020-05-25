@@ -38,8 +38,8 @@ class ConnectedPlayer(Thread):
         self.location.x = x
         self.location.y = y
 
-    def change_health(self, hp):
-        self.hp = hp
+    def remove_health(self, value):
+        self.hp -= value
 
     def get_player_info(self):
         dict_info = {"id": self.id,
