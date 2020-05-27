@@ -57,12 +57,16 @@ class Server(GameMechanics):
                 if not self.player1.is_alive() or not self.player2.is_alive():
                     break
                 self.execute_mechanics(action_client1, action_client2)
+                game_ended = self.check_if_player_died()
+                if game_ended is not None:
+                    print(f"Game ended, player {game_ended} died")
+                    break
                 self.send_info_to_both_players(self.json_board())
                 print_tick += 1
-                if print_tick == 10:
+                if print_tick == 20:
                     print(self.json_board())
                     print_tick = 0
-                time.sleep(0.1)
+                time.sleep(0.05)
             self.close_connection_with_players()
         time.sleep(1)
         self.shutdown()

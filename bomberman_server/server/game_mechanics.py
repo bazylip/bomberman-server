@@ -32,8 +32,13 @@ class GameMechanics:
         player = self.player1 if id == 1 else self.player2
         return player.get_player_info()
 
-    def add_bomb(self, x, y):
-        self.board_state["bombs"].append({"x": x, "y": y, "ticks": 0})
+    def add_bomb(self, x, y, id):
+        if id == 1:
+            if x != self.player2.location.x and y != self.player2.location.y:
+                self.board_state["bombs"].append({"x": x, "y": y, "ticks": 0})
+        else:
+            if x != self.player1.location.x and y != self.player1.location.y:
+                self.board_state["bombs"].append({"x": x, "y": y, "ticks": 0})
 
     def _update_board_state(self):
         new_players_positions = {"player1": self.get_player_info(id=1),
@@ -53,7 +58,7 @@ class GameMechanics:
             if action_dict is not None:
                 action = eval(action_dict).get("action")
                 if action == "b":
-                    self.add_bomb(player.location.x, player.location.y)
+                    self.add_bomb(player.location.x, player.location.y, player.id)
                 else:
                     player = self._valid_location(player, action)
 
@@ -79,7 +84,8 @@ class GameMechanics:
 
         for players in [self.player1, self.player2]:
             print(f"x_exploded: {x_exploded_fields}, y_exploded: {y_exploded_fields}")
-            if players.location.x in x_exploded_fields and players.location.y in y_exploded_fields:
+            if (players.location.x == bomb_x and players.location.y in y_exploded_fields) or \
+                (players.location.y == bomb_y and players.location.x in x_exploded_fields):
                 players.remove_health(HEALTH_PER_EXPLOSION)
 
         self.board_state["bombs"].remove(bomb)
@@ -101,3 +107,10 @@ class GameMechanics:
 
     def update_players(self):
         pass
+
+    def check_if_player_died(self):
+        if self.player1.hp <= 0:
+            return 1
+        elif self.player2.hp <= 0:
+            return 2
+        return None
