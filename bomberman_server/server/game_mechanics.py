@@ -5,12 +5,17 @@ from bomberman_server.connected_player.connected_player import ConnectedPlayer
 
 BOARD_DIMENSION_X = 15
 BOARD_DIMENSION_Y = 9
-BOMB_TICKS_THRESHOLD = 300000
+BOMB_TICKS_THRESHOLD = 30
 BOMB_EXPLOSION_RANGE = 4
 HEALTH_PER_EXPLOSION = 25
 
 class GameMechanics:
     def __init__(self):
+        self.player1 = None
+        self.player2 = None
+        self.board_state = None
+
+    def reset(self):
         self.player1 = None
         self.player2 = None
         self.board_state = None
