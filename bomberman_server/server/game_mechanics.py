@@ -71,14 +71,15 @@ class GameMechanics:
         if bomb_x % 2 == 0:
             y_exploded_fields = range(bomb_y, bomb_y+1)
         else:
-            y_exploded_field = range(bomb_y-BOMB_EXPLOSION_RANGE, bomb_y+BOMB_EXPLOSION_RANGE)
+            y_exploded_fields = range(bomb_y-BOMB_EXPLOSION_RANGE, bomb_y+BOMB_EXPLOSION_RANGE)
         if bomb_y % 2 == 0:
             x_exploded_fields = range(bomb_x, bomb_x+1)
         else:
-            x_exploded_field = range(bomb_x - BOMB_EXPLOSION_RANGE, bomb_x + BOMB_EXPLOSION_RANGE)
+            x_exploded_fields = range(bomb_x - BOMB_EXPLOSION_RANGE, bomb_x + BOMB_EXPLOSION_RANGE)
 
         for players in [self.player1, self.player2]:
-            if players.location.x in x_exploded_field or players.location.y in y_exploded_field:
+            print(f"x_exploded: {x_exploded_fields}, y_exploded: {y_exploded_fields}")
+            if players.location.x in x_exploded_fields and players.location.y in y_exploded_fields:
                 players.remove_health(HEALTH_PER_EXPLOSION)
 
         self.board_state["bombs"].remove(bomb)
