@@ -34,10 +34,10 @@ class GameMechanics:
 
     def add_bomb(self, x, y, id):
         if id == 1:
-            if x != self.player2.location.x and y != self.player2.location.y:
+            if x != self.player2.location.x or y != self.player2.location.y:
                 self.board_state["bombs"].append({"x": x, "y": y, "ticks": 0})
         else:
-            if x != self.player1.location.x and y != self.player1.location.y:
+            if x != self.player1.location.x or y != self.player1.location.y:
                 self.board_state["bombs"].append({"x": x, "y": y, "ticks": 0})
 
     def _update_board_state(self):

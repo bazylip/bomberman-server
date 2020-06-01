@@ -66,7 +66,7 @@ class Server(GameMechanics):
                 if print_tick == 20:
                     print(self.json_board())
                     print_tick = 0
-                time.sleep(0.05)
+                time.sleep(0.03)
             self.close_connection_with_players()
         time.sleep(1)
         self.shutdown()
