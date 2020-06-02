@@ -3,6 +3,7 @@ from threading import Thread
 
 MSGLEN = 500
 
+
 class Listener(Thread):
     def __init__(self, queue, socket):
         super().__init__()
@@ -27,7 +28,7 @@ class Listener(Thread):
             try:
                 message = self.receive_message()
                 self.queue.put(message)
-            except:
+            except BaseException:
                 print("Client has disconnected")
                 self.socket.close()
                 break

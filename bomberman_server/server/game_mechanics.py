@@ -7,6 +7,7 @@ BOMB_TICKS_THRESHOLD = 30
 BOMB_EXPLOSION_RANGE = 4
 HEALTH_PER_EXPLOSION = 25
 
+
 class GameMechanics:
     def __init__(self):
         self.player1 = None
@@ -32,7 +33,7 @@ class GameMechanics:
 
     def _update_board_state(self):
         new_players_positions = {"player1": self.get_player_info(id=1),
-                                   "player2": self.get_player_info(id=2)}
+                                 "player2": self.get_player_info(id=2)}
         self.board_state.update(new_players_positions)
 
     def execute_mechanics(self, action_client1, action_client2):
@@ -43,13 +44,16 @@ class GameMechanics:
         self.update_players()
 
     def _process_user_action(self, action_client1, action_client2):
-        for action_dict, players in zip([action_client1, action_client2], [(self.player1, self.player2),
-                                                                          (self.player2, self.player1)]):
+        for action_dict, players in zip([action_client1, action_client2], [(
+                self.player1, self.player2), (self.player2, self.player1)]):
             player, other_player = players[0], players[1]
             if action_dict is not None:
                 action = eval(action_dict).get("action")
                 if action == "b":
-                    self._add_bomb(player.location.x, player.location.y, player.id)
+                    self._add_bomb(
+                        player.location.x,
+                        player.location.y,
+                        player.id)
                 else:
                     player = self._valid_location(player, other_player, action)
 
@@ -73,18 +77,23 @@ class GameMechanics:
     def _explode_bomb(self, bomb):
         bomb_x, bomb_y = bomb.get("x"), bomb.get("y")
         if bomb_x % 2 == 0:
-            y_exploded_fields = range(bomb_y, bomb_y+1)
+            y_exploded_fields = range(bomb_y, bomb_y + 1)
         else:
-            y_exploded_fields = range(bomb_y-BOMB_EXPLOSION_RANGE, bomb_y+BOMB_EXPLOSION_RANGE)
+            y_exploded_fields = range(
+                bomb_y - BOMB_EXPLOSION_RANGE,
+                bomb_y + BOMB_EXPLOSION_RANGE)
         if bomb_y % 2 == 0:
-            x_exploded_fields = range(bomb_x, bomb_x+1)
+            x_exploded_fields = range(bomb_x, bomb_x + 1)
         else:
-            x_exploded_fields = range(bomb_x - BOMB_EXPLOSION_RANGE, bomb_x + BOMB_EXPLOSION_RANGE)
+            x_exploded_fields = range(
+                bomb_x - BOMB_EXPLOSION_RANGE,
+                bomb_x + BOMB_EXPLOSION_RANGE)
 
         for players in [self.player1, self.player2]:
-            print(f"x_exploded: {x_exploded_fields}, y_exploded: {y_exploded_fields}")
-            if (players.location.x == bomb_x and players.location.y in y_exploded_fields) or \
-                (players.location.y == bomb_y and players.location.x in x_exploded_fields):
+            print(
+                f"x_exploded: {x_exploded_fields}, y_exploded: {y_exploded_fields}")
+            if (players.location.x == bomb_x and players.location.y in y_exploded_fields) or (
+                    players.location.y == bomb_y and players.location.x in x_exploded_fields):
                 players.remove_health(HEALTH_PER_EXPLOSION)
 
         self.board_state["bombs"].remove(bomb)

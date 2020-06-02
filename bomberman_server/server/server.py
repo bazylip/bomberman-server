@@ -24,15 +24,18 @@ class Server(GameMechanics):
         print(f"Players connected \n{client1}\n{client2}")
 
     def send_info_to_player(self, id, message):
-        self.player1.send_message(message) if id == 1 else self.player2.send_message(message)
+        self.player1.send_message(
+            message) if id == 1 else self.player2.send_message(message)
 
     def send_info_to_both_players(self, message):
         self.send_info_to_player(1, message)
         self.send_info_to_player(2, message)
 
     def send_initial_info(self):
-        self.send_info_to_player(id=1, message=self.player1.get_json_player_info())
-        self.send_info_to_player(id=2, message=self.player2.get_json_player_info())
+        self.send_info_to_player(
+            id=1, message=self.player1.get_json_player_info())
+        self.send_info_to_player(
+            id=2, message=self.player2.get_json_player_info())
 
     def close_connection_with_players(self):
         print("Closing connection with players")

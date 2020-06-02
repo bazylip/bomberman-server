@@ -3,6 +3,7 @@ from threading import Thread
 
 MSGLEN = 500
 
+
 class Sender(Thread):
     def __init__(self, queue, socket):
         super().__init__()
@@ -19,7 +20,7 @@ class Sender(Thread):
                     raise RuntimeError("Socket connection broken")
                 total_sent = total_sent + sent
             return True
-        except:
+        except BaseException:
             return False
 
     def run(self):
