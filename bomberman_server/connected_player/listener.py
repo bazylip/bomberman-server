@@ -1,8 +1,7 @@
 from threading import Thread
-import socket
+
 
 MSGLEN = 500
-
 
 class Listener(Thread):
     def __init__(self, queue, socket):
@@ -16,7 +15,7 @@ class Listener(Thread):
         while bytes_recd < MSGLEN:
             chunk = self.socket.recv(min(MSGLEN - bytes_recd, 2048))
             if chunk == b'':
-                raise RuntimeError("socket connection broken")
+                raise RuntimeError("Socket connection broken")
             chunks.append(chunk)
             bytes_recd = bytes_recd + len(chunk)
         message = b''.join(chunks)

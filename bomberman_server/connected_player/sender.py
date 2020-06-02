@@ -1,8 +1,7 @@
 from threading import Thread
-import socket
+
 
 MSGLEN = 500
-
 
 class Sender(Thread):
     def __init__(self, queue, socket):
