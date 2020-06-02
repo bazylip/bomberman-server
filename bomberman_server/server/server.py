@@ -72,4 +72,3 @@ class Server(GameMechanics):
             self.close_connection_with_players()
         time.sleep(1)
         self.shutdown()
-

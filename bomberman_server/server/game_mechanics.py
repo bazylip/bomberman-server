@@ -39,7 +39,6 @@ class GameMechanics:
         self._process_user_action(action_client1, action_client2)
         self._increase_bomb_ticks()
         self._explode_bombs()
-        # Placeholder: execute mechanics
         self._update_board_state()
         self.update_players()
 
